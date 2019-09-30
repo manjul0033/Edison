@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: edison-service
+  labels:
+    app: edison
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 9090
+    protocol: TCP
+    name: http
+  selector:
+    app: edison
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edison-deployment
+  labels:
+    app: edison
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: edison
+  template:
+    metadata:
+      labels:
+        app: edison
+    spec:
+      containers:
+      - name: edison
+        image: manjuls/edison-java:latest
+        ports:
+        - containerPort: 9090

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: edison-golang-service
+  labels:
+    app: edison
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 9999
+    protocol: TCP
+    name: http
+  selector:
+    app: edison
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edison-golang-deployment
+  labels:
+    app: edison
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: edison
+  template:
+    metadata:
+      labels:
+        app: edison
+    spec:
+      containers:
+      - name: edison
+        image: manjuls/edison-golang:latest
+        ports:
+        - containerPort: 9999
