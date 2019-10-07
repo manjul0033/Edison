@@ -11,7 +11,7 @@ public class EdisonJavaDemoApplication {
 	
 	@RequestMapping("/")
     public String sayHello() {
-        return "<h1>Hello from Edison Platform !!!<h1>";
+        return "<h1>Hello to Edison Health Link !!!<h1>";
     }
 
 	public static void main(String[] args) {
